@@ -137,9 +137,23 @@
     var conn = navigator.connection || {};
     var slow = conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!slow && !reduced) {
+    var playHero = function () {
       heroVideo.preload = "auto";
-      heroVideo.play().catch(function () {});
+      var p = heroVideo.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    // Обычные устройства: пробуем автозапуск сразу (кроме reduced-motion и медленной сети).
+    if (!slow && !reduced) playHero();
+    // Фолбэк: iOS Low Power Mode и строгие политики блокируют автозапуск —
+    // но пользовательский жест разрешает воспроизведение. Стартуем при первом
+    // касании/клике/скролле, чтобы видео заработало и в энергосбережении.
+    if (!slow) {
+      var kickEvents = ["touchstart", "pointerdown", "click", "keydown", "scroll"];
+      var kick = function () {
+        if (heroVideo.paused) playHero();
+        kickEvents.forEach(function (ev) { window.removeEventListener(ev, kick); });
+      };
+      kickEvents.forEach(function (ev) { window.addEventListener(ev, kick, { passive: true }); });
     }
   }
 
