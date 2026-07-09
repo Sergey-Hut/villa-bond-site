@@ -2,11 +2,12 @@
 (function () {
   "use strict";
 
-  /* ---------- Analytics helper (Meta Pixel + GA4, no-op если не подключены) ---------- */
+  /* ---------- Analytics helper (Meta Pixel + GA4 + Яндекс.Метрика, no-op если не подключены) ---------- */
   function track(name, params) {
     try {
       if (typeof fbq === "function") fbq("trackCustom", name, params || {});
       if (typeof gtag === "function") gtag("event", name, params || {});
+      if (typeof ym === "function" && window.VB_YM_ID) ym(window.VB_YM_ID, "reachGoal", name, params || {});
     } catch (e) { /* noop */ }
   }
   window.vbTrack = track;
