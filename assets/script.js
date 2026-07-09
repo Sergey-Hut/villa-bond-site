@@ -31,12 +31,15 @@
   /* ---------- Header on scroll + progress bar ---------- */
   var header = document.querySelector(".header");
   var stickyWa = document.querySelector(".sticky-wa");
+  var toTop = document.querySelector(".to-top");
   var hero = document.querySelector(".hero");
   var progress = document.querySelector(".scroll-progress");
   function onScroll() {
     var y = window.scrollY;
     if (header) header.classList.toggle("scrolled", y > 40);
-    if (stickyWa && hero) stickyWa.classList.toggle("visible", y > hero.offsetHeight * 0.7);
+    var past = hero ? y > hero.offsetHeight * 0.7 : y > 600;
+    if (stickyWa) stickyWa.classList.toggle("visible", past);
+    if (toTop) toTop.classList.toggle("visible", past);
     if (progress) {
       var docH = document.documentElement.scrollHeight - window.innerHeight;
       progress.style.width = (docH > 0 ? (y / docH) * 100 : 0) + "%";
@@ -45,6 +48,12 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
   onScroll();
+  if (toTop) {
+    toTop.addEventListener("click", function () {
+      var smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+    });
+  }
 
   /* ---------- Mobile menu ---------- */
   var navToggle = document.querySelector(".nav-toggle");

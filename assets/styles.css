@@ -519,6 +519,33 @@ html.js .hero-content {
 .sticky-wa.visible { transform: translateY(0); }
 .sticky-wa .btn { width: 100%; justify-content: center; box-shadow: 0 8px 28px rgba(33, 30, 26, 0.22); }
 
+/* ---------- Back to top (floating) ---------- */
+.to-top {
+  position: fixed; z-index: 55; right: 16px; bottom: 24px; padding: 0;
+  width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; cursor: pointer;
+  background: rgba(33, 30, 26, 0.72); color: var(--white);
+  border: 1px solid rgba(255, 253, 249, 0.22);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 6px 22px rgba(33, 30, 26, 0.3);
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), visibility 0.35s, background 0.3s;
+}
+.to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top svg { width: 20px; height: 20px; fill: currentColor; }
+.to-top:hover { background: rgba(33, 30, 26, 0.92); }
+.to-top:active { transform: scale(0.93); }
+body.menu-open .to-top { opacity: 0; visibility: hidden; }
+@media (max-width: 900px) { .to-top { bottom: 84px; } } /* над плавающей кнопкой WhatsApp */
+
+/* Ссылка «Наверх» в подвале */
+.footer-top {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 500; color: var(--ink-soft) !important;
+}
+.footer-top svg { width: 14px; height: 14px; fill: currentColor; }
+.footer-top:hover { color: var(--accent-dark) !important; }
+
 /* ---------- Story photo slider ---------- */
 .story-slider { position: relative; border-radius: var(--radius); overflow: hidden; background: #1a1713; }
 .story-slider .slides { display: flex; transition: transform 0.6s var(--ease); }
