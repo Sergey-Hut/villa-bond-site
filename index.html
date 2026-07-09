@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,380;9..144,450&family=Inter:wght@400;450;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=9">
+  <link rel="stylesheet" href="assets/styles.css?v=10">
   <link rel="preload" as="image" href="assets/img/poster.webp" fetchpriority="high">
   <script>if(!/noanim/.test(location.search))document.documentElement.classList.add('js');</script>
 
@@ -123,10 +123,13 @@
 <!-- ======================= HERO ======================= -->
 <section class="hero" id="top">
   <div class="hero-media">
-    <video muted loop playsinline preload="none" poster="assets/img/poster.webp" aria-label="Видео виллы: бассейн, гостиная, спальни">
+    <video autoplay muted loop playsinline preload="none" poster="assets/img/poster.webp" aria-label="Видео виллы: бассейн, гостиная, спальни">
       <source src="assets/video/hero.mp4" type="video/mp4">
     </video>
   </div>
+  <button class="hero-play" type="button" aria-label="Смотреть видео виллы">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+  </button>
   <div class="hero-content">
     <p class="eyebrow">Раваи · Пхукет · 5 минут до пляжа Nai Harn</p>
     <h1>Своя вилла с бассейном на Пхукете — заезжайте и живите</h1>
@@ -561,6 +564,6 @@
   <span class="lb-count num"></span>
 </div>
 
-<script src="assets/script.js?v=7" defer></script>
+<script src="assets/script.js?v=8" defer></script>
 </body>
 </html>

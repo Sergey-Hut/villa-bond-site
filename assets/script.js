@@ -133,27 +133,32 @@
      В разметке video без autoplay и с preload="none": постер закрывает кадр,
      трафик не тратится до решения ниже. На быстром соединении включаем загрузку и play. */
   var heroVideo = document.querySelector(".hero-media video");
+  var heroSection = document.querySelector(".hero");
+  var heroPlayBtn = document.querySelector(".hero-play");
   if (heroVideo) {
     var conn = navigator.connection || {};
     var slow = conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
-    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var showPlay = function () { if (heroSection && !slow) heroSection.classList.add("show-play"); };
+    var hidePlay = function () { if (heroSection) heroSection.classList.remove("show-play"); };
     var playHero = function () {
       heroVideo.preload = "auto";
       var p = heroVideo.play();
-      if (p && p.catch) p.catch(function () {});
+      if (p && p.then) { p.then(hidePlay).catch(showPlay); }
     };
-    // Обычные устройства: пробуем автозапуск сразу (кроме reduced-motion и медленной сети).
-    if (!slow && !reduced) playHero();
-    // Фолбэк: iOS Low Power Mode и строгие политики блокируют автозапуск —
-    // но пользовательский жест разрешает воспроизведение. Стартуем при первом
-    // касании/клике/скролле, чтобы видео заработало и в энергосбережении.
+    heroVideo.addEventListener("playing", hidePlay);
     if (!slow) {
-      var kickEvents = ["touchstart", "pointerdown", "click", "keydown", "scroll"];
-      var kick = function () {
-        if (heroVideo.paused) playHero();
-        kickEvents.forEach(function (ev) { window.removeEventListener(ev, kick); });
-      };
+      playHero(); // нативный autoplay + программный запуск сразу
+      // Если автоплей заблокирован (энергосбережение iOS и т.п.) — через ~1с показываем кнопку ▶
+      setTimeout(function () { if (heroVideo.paused) showPlay(); }, 1000);
+      // Прямой тап по кнопке ▶ — самый надёжный жест для iOS
+      if (heroPlayBtn) heroPlayBtn.addEventListener("click", function (e) { e.preventDefault(); playHero(); });
+      // Плюс старт при первом касании/клике где угодно (события на отпускание — надёжны для медиа)
+      var kick = function () { if (heroVideo.paused) playHero(); };
+      var kickEvents = ["touchend", "click", "pointerup"];
       kickEvents.forEach(function (ev) { window.addEventListener(ev, kick, { passive: true }); });
+      heroVideo.addEventListener("playing", function () {
+        kickEvents.forEach(function (ev) { window.removeEventListener(ev, kick); });
+      });
     }
   }
 

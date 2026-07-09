@@ -117,6 +117,21 @@ section { padding: var(--pad-section) 0; }
 .hero-media video, .hero-media img {
   width: 100%; height: 100%; object-fit: cover;
 }
+/* Кнопка запуска hero-видео — видна только когда автоплей заблокирован (энергосбережение iOS и т.п.) */
+.hero-play {
+  position: absolute; z-index: 4; top: 42%; left: 50%; transform: translate(-50%, -50%);
+  width: 76px; height: 76px; border-radius: 50%; padding: 0;
+  display: none; place-items: center; cursor: pointer;
+  background: rgba(18, 14, 10, 0.42); color: var(--white);
+  border: 1.5px solid rgba(255, 253, 249, 0.78);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+  transition: background 0.3s var(--ease), transform 0.25s var(--ease);
+}
+.hero.show-play .hero-play { display: grid; }
+.hero-play svg { width: 30px; height: 30px; fill: currentColor; margin-left: 5px; }
+.hero-play:hover { background: rgba(18, 14, 10, 0.6); }
+.hero-play:active { transform: translate(-50%, -50%) scale(0.93); }
 .hero::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(18, 14, 10, 0.82) 0%, rgba(18, 14, 10, 0.32) 45%, rgba(18, 14, 10, 0.22) 100%);
