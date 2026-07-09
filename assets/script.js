@@ -178,15 +178,28 @@
     tour.addEventListener("click", function () {
       if (tour.dataset.playing) return;
       tour.dataset.playing = "1";
-      var src = tour.getAttribute("data-src");
-      var v = document.createElement("video");
-      v.src = src;
-      v.controls = true;
-      v.autoplay = true;
-      v.playsInline = true;
-      v.style.aspectRatio = "16 / 9";
+      var yt = tour.getAttribute("data-yt");
+      var media;
+      if (yt) {
+        media = document.createElement("iframe");
+        media.src = "https://www.youtube-nocookie.com/embed/" + yt +
+          "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+        media.title = "Villa Bond — видео-тур";
+        media.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        media.setAttribute("allowfullscreen", "");
+        media.style.border = "0";
+      } else {
+        media = document.createElement("video");
+        media.src = tour.getAttribute("data-src");
+        media.controls = true;
+        media.autoplay = true;
+        media.playsInline = true;
+      }
+      media.style.width = "100%";
+      media.style.aspectRatio = "16 / 9";
+      media.style.display = "block";
       tour.innerHTML = "";
-      tour.appendChild(v);
+      tour.appendChild(media);
       tour.style.cursor = "default";
       tour.removeAttribute("role");
       tour.removeAttribute("tabindex");
