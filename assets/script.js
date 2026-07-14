@@ -391,10 +391,88 @@
     /* убрать ?sent=1 из адресной строки, оставив якорь #contact */
     try { history.replaceState(null, "", location.pathname + "#contact"); } catch (e) {}
   }
+  /* ---------- Форма: AJAX-отправка с гарантированным WhatsApp-фолбэком ----------
+     Приоритет — email через FormSubmit. Если он завис/упал (500/524/таймаут) —
+     форма САМА открывает WhatsApp с уже подставленными данными, чтобы лид
+     не потерялся никогда. Успех → страница «Спасибо» (там же считается конверсия). */
   var form = document.querySelector(".form form");
   if (form) {
-    /* _next для formsubmit: после отправки → страница «Спасибо» (по языку) */
-    var next = form.querySelector('input[name="_next"]');
-    if (next) next.value = location.origin + "/" + (document.documentElement.lang === "ru" ? "thanks-ru.html" : "thanks.html");
+    var isRu = document.documentElement.lang === "ru";
+    var thanksUrl = location.origin + "/" + (isRu ? "thanks-ru.html" : "thanks.html");
+    var WA_NUMBER = "6282147551770";
+
+    /* no-JS / ошибка обработчика: нативный POST хотя бы редиректит на «Спасибо» */
+    var nextField = form.querySelector('input[name="_next"]');
+    if (nextField) nextField.value = thanksUrl;
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var btnLabel = submitBtn ? submitBtn.textContent : "";
+
+    function val(sel) {
+      var el = form.querySelector(sel);
+      return el && el.value ? el.value.trim() : "";
+    }
+
+    function whatsappFallback(name, phone, msg) {
+      var text = isRu
+        ? "Здравствуйте! Пишу с сайта Villa Bond.\nИмя: " + name + "\nТелефон: " + phone + (msg ? "\nВопрос: " + msg : "")
+        : "Hi! I'm writing from the Villa Bond website.\nName: " + name + "\nPhone: " + phone + (msg ? "\nQuestion: " + msg : "");
+      location.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text);
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      /* honeypot заполнен → бот: тихо уводим на «Спасибо», ничего не отправляя */
+      var honey = form.querySelector('input[name="_honey"]');
+      if (honey && honey.value) { location.href = thanksUrl; return; }
+
+      var name = val('[name="name"]');
+      var phone = val('[name="phone"]');
+      var msg = val('[name="message"]');
+      if (!name || !phone) {
+        if (form.reportValidity) form.reportValidity();
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = isRu ? "Отправляем…" : "Sending…";
+      }
+
+      var done = false;
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, 9000);
+
+      function fail() {
+        if (done) return; done = true;
+        clearTimeout(timer);
+        whatsappFallback(name, phone, msg);   // лид не теряется
+      }
+      function ok() {
+        if (done) return; done = true;
+        clearTimeout(timer);
+        location.href = thanksUrl;             // конверсия считается на «Спасибо»
+      }
+
+      var payload = {
+        name: name, phone: phone, message: msg,
+        _subject: val('[name="_subject"]') || "Villa Bond website enquiry",
+        _captcha: "false", _template: "table"
+      };
+
+      fetch("https://formsubmit.co/ajax/02e9a85a1f893f216bf2fc1fc7c74fa6", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal
+      })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function (j) {
+          if (j && (j.success === "true" || j.success === true)) ok();
+          else fail();
+        })
+        .catch(function () { fail(); });
+    });
   }
 })();

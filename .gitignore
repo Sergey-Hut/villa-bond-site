@@ -2,3 +2,4 @@
 DEPLOY.md
 *.log
 assets/profile/
+.claude/
