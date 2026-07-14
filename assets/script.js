@@ -393,8 +393,8 @@
   }
   var form = document.querySelector(".form form");
   if (form) {
-    /* _next для formsubmit: возврат на эту же страницу с ?sent=1 */
+    /* _next для formsubmit: после отправки → страница «Спасибо» (по языку) */
     var next = form.querySelector('input[name="_next"]');
-    if (next) next.value = location.origin + location.pathname + "?sent=1#contact";
+    if (next) next.value = location.origin + "/" + (document.documentElement.lang === "ru" ? "thanks-ru.html" : "thanks.html");
   }
 })();
