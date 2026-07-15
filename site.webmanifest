@@ -1,0 +1,11 @@
+{
+  "name": "Villa Bond — Rawai, Phuket",
+  "short_name": "Villa Bond",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#211E1A",
+  "background_color": "#FAF7F2",
+  "display": "browser"
+}
