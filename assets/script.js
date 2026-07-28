@@ -417,7 +417,9 @@
       var text = isRu
         ? "Здравствуйте! Пишу с сайта Villa Bond.\nИмя: " + name + "\nТелефон: " + phone + (msg ? "\nВопрос: " + msg : "")
         : "Hi! I'm writing from the Villa Bond website.\nName: " + name + "\nPhone: " + phone + (msg ? "\nQuestion: " + msg : "");
-      location.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text);
+      var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text);
+      track("form_submit", { via: "wa_fallback" });          // лид реален, считаем как форму — не задваиваем с wa_click
+      setTimeout(function () { location.href = url; }, 150); // даём метрике время уйти до перехода
     }
 
     form.addEventListener("submit", function (e) {
