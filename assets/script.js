@@ -427,7 +427,11 @@
 
       /* honeypot заполнен → бот: тихо уводим на «Спасибо», ничего не отправляя */
       var honey = form.querySelector('input[name="_honey"]');
-      if (honey && honey.value) { location.href = thanksUrl; return; }
+      if (honey && honey.value) {
+        try { sessionStorage.setItem("vb_bot", "1"); } catch (e) {}
+        location.href = thanksUrl;
+        return;
+      }
 
       var name = val('[name="name"]');
       var phone = val('[name="phone"]');
