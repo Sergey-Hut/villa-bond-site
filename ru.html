@@ -35,7 +35,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,380;9..144,450&family=Inter:wght@400;450;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=12">
+  <link rel="stylesheet" href="assets/styles.css?v=13">
   <link rel="preload" as="image" href="assets/img/poster.webp" fetchpriority="high">
   <script>if(!/noanim/.test(location.search))document.documentElement.classList.add('js');</script>
 
@@ -240,7 +240,7 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2.1.4 0 .6l-.4.6-.5.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.6.4 0 .2 0 .7-.2 1Z"/></svg>
         Договориться о просмотре
       </a>
-      <a class="btn btn-dark" href="#gallery">Смотреть все фото</a>
+      <a class="btn btn-dark" href="#gallery" data-open-gallery>Смотреть все фото (27)</a>
     </div>
   </div>
 </section>
@@ -265,6 +265,20 @@
       <a href="assets/img/g12.webp"><img src="assets/img/g12-thumb.webp" srcset="assets/img/g12-thumb.webp 640w, assets/img/g12.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="Дорожка к бассейну через тропический сад" loading="lazy" width="1600" height="1067"></a>
       <a href="assets/img/g13.webp"><img src="assets/img/g13-thumb.webp" srcset="assets/img/g13-thumb.webp 640w, assets/img/g13.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="Уличный душ в тропическом саду" loading="lazy" width="1600" height="1067"></a>
       <a href="assets/img/g14.webp"><img src="assets/img/g14-thumb.webp" srcset="assets/img/g14-thumb.webp 640w, assets/img/g14.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="Входная зона виллы" loading="lazy" width="1600" height="1067"></a>
+      <!-- Полный архив: скрыты в сетке, но листаются в лайтбоксе по кнопке «Смотреть все фото» -->
+      <a class="g-more" href="assets/img/g15.webp"><img src="assets/img/g15-thumb.webp" alt="Ванная комната: раковина, окно и вход в душ" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g16.webp"><img src="assets/img/g16-thumb.webp" alt="Въезд на территорию: крытая парковка и ворота" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g17.webp"><img src="assets/img/g17-thumb.webp" alt="Кухня с барной стойкой и обеденная зона" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g18.webp"><img src="assets/img/g18-thumb.webp" alt="Кухня: плита, вытяжка, холодильник — всё оборудовано" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g19.webp"><img src="assets/img/g19-thumb.webp" alt="Ванная со столешницей и большим зеркалом" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g20.webp"><img src="assets/img/g20-thumb.webp" alt="Гостиная с телевизором и сводчатым потолком" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g21.webp"><img src="assets/img/g21-thumb.webp" alt="Тропический сад с франжипани у входа" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g22.webp"><img src="assets/img/g22-thumb.webp" alt="Спальня с выходом к бассейну" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g23.webp"><img src="assets/img/g23-thumb.webp" alt="Душевая с санузлом" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g24.webp"><img src="assets/img/g24-thumb.webp" alt="Спальня с детской кроваткой и балдахином" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g25.webp"><img src="assets/img/g25-thumb.webp" alt="Гардеробная с деревянными полками" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g26.webp"><img src="assets/img/g26-thumb.webp" alt="Спальня и ванная с двойной раковиной" loading="lazy" width="1600" height="1067"></a>
+      <a class="g-more" href="assets/img/g27.webp"><img src="assets/img/g27-thumb.webp" alt="Спальня с видом на бассейн" loading="lazy" width="1600" height="1067"></a>
     </div>
   </div>
 </section>
@@ -595,6 +609,6 @@
   <span class="lb-count num"></span>
 </div>
 
-<script src="assets/script.js?v=14" defer></script>
+<script src="assets/script.js?v=15" defer></script>
 </body>
 </html>

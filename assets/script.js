@@ -348,6 +348,10 @@
     links.forEach(function (a, i) {
       a.addEventListener("click", function (e) { e.preventDefault(); open(i); });
     });
+    /* «Смотреть все фото» — открывает лайтбокс с первого кадра, не уводя с сайта */
+    Array.prototype.forEach.call(document.querySelectorAll("[data-open-gallery]"), function (btn) {
+      btn.addEventListener("click", function (e) { e.preventDefault(); open(0); });
+    });
     lb.querySelector(".lb-close").addEventListener("click", close);
     lb.querySelector(".lb-prev").addEventListener("click", function () { show(idx - 1); });
     lb.querySelector(".lb-next").addEventListener("click", function () { show(idx + 1); });

@@ -235,6 +235,8 @@ html.js .hero-content {
   display: block; overflow: hidden; border-radius: var(--radius);
   grid-column: span 2; position: relative;
 }
+/* полный архив (g15+): в сетке не показываем, но лайтбокс листает все */
+.gallery-grid a.g-more { display: none; }
 /* ритм рядов: 3+3 / 2+2+2 / 3+3 / 2+2+2 / 3+3 / 3+3 — без пустых ячеек */
 .gallery-grid a:nth-child(5n + 1), .gallery-grid a:nth-child(5n + 2),
 .gallery-grid a:nth-child(13), .gallery-grid a:nth-child(14) { grid-column: span 3; }
@@ -706,7 +708,7 @@ html.js .reveal.in { opacity: 1; transform: translateY(0); }
   .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .gallery-grid a, .gallery-grid a:nth-child(n) { grid-column: span 1; }
   .gallery-grid a:nth-child(5n + 1) { grid-column: span 2; }
-  .gallery-grid a:last-child { grid-column: span 2; }
+  .gallery-grid a:nth-child(14) { grid-column: span 2; }
   .story-img { order: -1; }
   .sticky-wa { display: flex; }
   .footer { padding-bottom: 130px; }
