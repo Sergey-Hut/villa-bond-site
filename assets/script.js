@@ -400,6 +400,7 @@
      форма САМА открывает WhatsApp с уже подставленными данными, чтобы лид
      не потерялся никогда. Успех → страница «Спасибо» (там же считается конверсия). */
   var form = document.querySelector(".form form");
+  var formLoadedAt = Date.now();
   if (form) {
     var isRu = document.documentElement.lang === "ru";
     var thanksUrl = location.origin + "/" + (isRu ? "thanks-ru.html" : "thanks.html");
@@ -431,7 +432,8 @@
 
       /* honeypot заполнен → бот: тихо уводим на «Спасибо», ничего не отправляя */
       var honey = form.querySelector('input[name="_honey"]');
-      if (honey && honey.value) {
+      /* человек не заполняет имя+телефон быстрее 4 с после загрузки страницы */
+      if ((honey && honey.value) || Date.now() - formLoadedAt < 4000) {
         try { sessionStorage.setItem("vb_bot", "1"); } catch (e) {}
         location.href = thanksUrl;
         return;
@@ -468,6 +470,7 @@
       var payload = {
         name: name, phone: phone, message: msg,
         _subject: val('[name="_subject"]') || "Villa Bond website enquiry",
+        _honey: "", vb_dwell_sec: Math.round((Date.now() - formLoadedAt) / 1000),
         _captcha: "false", _template: "table"
       };
 
