@@ -729,3 +729,39 @@ html.js .reveal.in { opacity: 1; transform: translateY(0); }
   .hero .eyebrow { font-size: 11px; letter-spacing: 0.14em; }
   .form { padding: 30px 22px; }
 }
+
+/* v15: hero на mobile/tablet — заголовок ближе к центру экрана, кнопки остаются внизу */
+@media (max-width: 1040px) {
+  .hero { align-items: stretch; }
+  .hero-content { display: flex; flex-direction: column; }
+  .hero .eyebrow { margin-top: auto; }
+  .hero-cta { margin-top: auto; }
+}
+
+/* ---- hero badges + lead-magnet (v14) ---- */
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.hb { font-size: 13.5px; letter-spacing: 0.02em; color: rgba(250,247,242,0.92);
+  border: 1px solid rgba(250,247,242,0.35); border-radius: 999px; padding: 7px 14px;
+  background: rgba(33,30,26,0.25); backdrop-filter: blur(4px); white-space: nowrap; }
+.hb b { color: var(--white); font-weight: 600; }
+.hero-pack { display: inline-block; margin-top: 16px; font-size: 14.5px;
+  color: rgba(250,247,242,0.95); text-decoration: underline;
+  text-underline-offset: 4px; text-decoration-color: rgba(250,247,242,0.45); }
+.hero-pack:hover { text-decoration-color: var(--white); }
+@media (max-width: 640px) { .hb { font-size: 12px; padding: 6px 11px; } }
+
+/* ---- quiz (v14) ---- */
+.quiz .q-label { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mute); margin-bottom: 14px; }
+.q-opt { display: block; width: 100%; text-align: left; font: 16px/1.4 "Inter", sans-serif;
+  color: var(--ink); background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 15px 18px; margin-bottom: 10px; cursor: pointer;
+  transition: border-color .2s var(--ease), transform .2s var(--ease); }
+.q-opt:hover { border-color: var(--accent); transform: translateX(3px); }
+.q-final .q-wa { width: 100%; justify-content: center; }
+.q-or { font-size: 13.5px; color: var(--ink-mute); margin: 14px 0 10px; text-align: center; }
+.q-call { display: flex; gap: 10px; }
+.q-call input { flex: 1; font: 16px "Inter", sans-serif; padding: 13px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); color: var(--ink); }
+.q-call input:focus { outline: none; border-color: var(--accent); }
+@media (max-width: 520px) { .q-call { flex-direction: column; } .q-call .btn { width: 100%; justify-content: center; } }

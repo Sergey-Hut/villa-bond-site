@@ -488,4 +488,57 @@
         .catch(function () { fail(); });
     });
   }
+
+  /* ---------- Квиз (v17): 2 вопроса -> WhatsApp с ответами или заявка на звонок ---------- */
+  var quiz = document.querySelector("[data-quiz]");
+  if (quiz) {
+    var qLang = quiz.getAttribute("data-lang") === "ru" ? "ru" : "en";
+    var qa = {};
+    function qShow(n) {
+      quiz.querySelectorAll(".q-step").forEach(function (st) {
+        st.hidden = st.getAttribute("data-step") !== String(n);
+      });
+      if (n === 3) {
+        var base = qLang === "ru"
+          ? "Здравствуйте! Интересует Villa Bond. Цель: " + (qa.goal || "-") + ", срок: " + (qa.when || "-") + ". Пришлите планировку, фото и расчёт аренды."
+          : "Hi! Interested in Villa Bond. Purpose: " + (qa.goal || "-") + ", timeline: " + (qa.when || "-") + ". Please send the floor plan, photos and rental figures.";
+        var waBtn = quiz.querySelector(".q-wa");
+        if (waBtn) waBtn.href = "https://wa.me/6282147551770?text=" + encodeURIComponent(base);
+      }
+      track("quiz_step", { step: n });
+    }
+    quiz.querySelectorAll(".q-opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        qa[b.getAttribute("data-q")] = b.getAttribute("data-v");
+        qShow(b.closest(".q-step").getAttribute("data-step") === "1" ? 2 : 3);
+      });
+    });
+    var waQ = quiz.querySelector(".q-wa");
+    if (waQ) waQ.addEventListener("click", function () { track("form_submit", { via: "quiz_wa" }); });
+    var callBtn = document.getElementById("q-call-btn");
+    if (callBtn) callBtn.addEventListener("click", function () {
+      var ph = document.getElementById("q-phone");
+      var val = ph && ph.value ? ph.value.trim() : "";
+      if (val.replace(/\D/g, "").length < 7) { if (ph) ph.focus(); return; }
+      callBtn.disabled = true;
+      callBtn.textContent = qLang === "ru" ? "Отправляем…" : "Sending…";
+      fetch("https://formsubmit.co/ajax/02e9a85a1f893f216bf2fc1fc7c74fa6", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ name: "Запрос звонка (квиз)", phone: val,
+          message: "Цель: " + (qa.goal || "-") + "; срок: " + (qa.when || "-"),
+          _subject: qLang === "ru" ? "Запрос звонка — Villa Bond (квиз)" : "Call request — Villa Bond (quiz)",
+          _template: "table", _honey: "" })
+      }).then(function (r) { return r.json(); }).then(function () {
+        var ok = quiz.querySelector(".form-ok"); if (ok) ok.classList.add("show");
+        callBtn.textContent = qLang === "ru" ? "Отправлено ✓" : "Sent ✓";
+        try { if (typeof fbq === "function") fbq("track", "Lead"); } catch (e) {}
+        track("form_submit", { via: "quiz_call" });
+      }).catch(function () {
+        callBtn.disabled = false;
+        callBtn.textContent = qLang === "ru" ? "Перезвоните мне" : "Request a call back";
+      });
+    });
+  }
+
 })();

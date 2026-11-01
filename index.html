@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,340;9..144,380;9..144,450&family=Inter:wght@400;450;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css?v=13">
+  <link rel="stylesheet" href="assets/styles.css?v=15">
   <link rel="preload" as="image" href="assets/img/poster.webp" fetchpriority="high">
   <script>if(!/noanim/.test(location.search))document.documentElement.classList.add('js');</script>
 
@@ -170,9 +170,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2.1.4 0 .6l-.4.6-.5.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.6.4 0 .2 0 .7-.2 1Z"/></svg>
         Chat on WhatsApp
       </a>
-      <a class="btn btn-ghost" href="#tour">Explore the villa</a>
+      <a class="btn btn-ghost" href="#gallery" data-open-gallery>View 27 photos</a>
     </div>
-    <p class="hero-meta num"><b>$520,000</b> · Freehold, direct from owner, no commissions · already let — 8–10% rental as a guide at full occupancy</p>
+    <div class="hero-badges num" aria-label="Key terms"><span class="hb"><b>$520,000</b> · 17M THB</span><span class="hb">Freehold · Chanote title</span><span class="hb">3 beds · 295 sqm</span><span class="hb">Rented · 8–10% as a guide</span></div>
+      <a class="hero-pack" href="https://wa.me/6282147551770?text=Hi%21%20Please%20send%20the%20Villa%20Bond%20pack%3A%20floor%20plan%2C%2027%20photos%20and%20rental%20figures." target="_blank" rel="noopener" data-wa="leadmagnet">Get the pack on WhatsApp: floor plan, 27 photos, rental figures →</a>
   </div>
 </section>
 
@@ -559,22 +560,33 @@
           <p class="hint">We usually reply within an hour during Phuket daytime (GMT+7)</p>
         </div>
       </div>
-      <div class="form reveal">
-        <h3>Not ready to message now — leave your contact and we'll reach out</h3>
-        <p class="sub">We'll message you first on WhatsApp — or call, whichever suits you.</p>
-        <form action="https://formsubmit.co/02e9a85a1f893f216bf2fc1fc7c74fa6" method="POST">
-          <input type="hidden" name="_subject" value="Enquiry from Villa Bond website (EN)">
-          <input type="hidden" name="_next" value="">
-          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <label for="f-name">Name</label>
-          <input id="f-name" type="text" name="name" required autocomplete="name">
-          <label for="f-phone">WhatsApp or phone</label>
-          <input id="f-phone" type="tel" name="phone" required autocomplete="tel" inputmode="tel">
-          <label for="f-msg">Question (optional)</label>
-          <textarea id="f-msg" name="message"></textarea>
-          <button class="btn btn-dark" type="submit">Request details</button>
-          <p class="form-ok">Thank you! We'll get back to you shortly.</p>
-        </form>
+      <div class="form reveal" id="quiz">
+        <h3>Get details for your exact case</h3>
+        <p class="sub">Two questions — we'll send the floor plan, photos and figures for your case.</p>
+        <div class="quiz" data-quiz data-lang="en">
+          <div class="q-step" data-step="1">
+            <p class="q-label">1 of 2 — what is the purchase for?</p>
+            <button type="button" class="q-opt" data-q="goal" data-v="to live in">To live in</button>
+            <button type="button" class="q-opt" data-q="goal" data-v="investment/rental">Investment — rent it out</button>
+            <button type="button" class="q-opt" data-q="goal" data-v="live + rent">Both live and rent</button>
+          </div>
+          <div class="q-step" data-step="2" hidden>
+            <p class="q-label">2 of 2 — when are you planning to buy?</p>
+            <button type="button" class="q-opt" data-q="when" data-v="1-3 months">Within 1–3 months</button>
+            <button type="button" class="q-opt" data-q="when" data-v="up to 6 months">Within 6 months</button>
+            <button type="button" class="q-opt" data-q="when" data-v="researching">Still researching</button>
+          </div>
+          <div class="q-step q-final" data-step="3" hidden>
+            <p class="q-label">Where should we send the details?</p>
+            <a class="btn btn-primary q-wa" href="#" target="_blank" rel="noopener" data-wa="quiz">Get it on WhatsApp</a>
+            <p class="q-or">or leave your number — we'll call you back</p>
+            <div class="q-call">
+              <input id="q-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Your phone / WhatsApp" aria-label="Телефон">
+              <button class="btn btn-dark" id="q-call-btn" type="button">Request a call back</button>
+            </div>
+            <p class="form-ok">Thank you! We'll be in touch shortly.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -609,6 +621,6 @@
   <span class="lb-count num"></span>
 </div>
 
-<script src="assets/script.js?v=16" defer></script>
+<script src="assets/script.js?v=17" defer></script>
 </body>
 </html>
